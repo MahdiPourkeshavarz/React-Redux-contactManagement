@@ -1,7 +1,9 @@
+import { ContactList } from "../../components/list/ContactList";
+
 export function HomePage() {
   return (
     <>
-      <div>HomePage</div>
+      <ContactList />
     </>
   );
 }

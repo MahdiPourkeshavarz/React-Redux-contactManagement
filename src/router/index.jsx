@@ -4,10 +4,12 @@ import { HomePage } from "../pages/Home/HomePage";
 import { CreateContactPage } from "../pages/createContact/CreateContactPage";
 import EditPage from "../pages/edit/EditPage";
 import { ContactPage } from "../pages/Contact/ContactPage";
+import Layout from "../layout";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Layout />,
     errorElement: <NotFoundPage />,
     children: [
       {
@@ -15,15 +17,15 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/create",
+        path: "/contacts/create",
         element: <CreateContactPage />,
       },
       {
-        path: "/edit/:contactId",
+        path: "/contacts/edit/:contactId",
         element: <EditPage />,
       },
       {
-        path: "/contact/:contactId",
+        path: "/contacts/:contactId",
         element: <ContactPage />,
       },
     ],
