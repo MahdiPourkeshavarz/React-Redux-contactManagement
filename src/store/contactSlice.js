@@ -43,6 +43,11 @@ const contactApi = createApi({
   }),
 });
 
-export const { useFetchContactsQuery } = contactApi;
+export const {
+  useFetchContactsQuery,
+  useCreateContactMutation,
+  useDeleteContactMutation,
+  useUpdateContactMutation,
+} = contactApi;
 
 export default contactApi;
