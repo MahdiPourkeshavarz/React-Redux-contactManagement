@@ -16,7 +16,7 @@ export function SearchBar() {
       }
       return prev;
     });
-  }, 1000);
+  }, 200);
 
   useFetchContactsQuery(generateQueryParams(searchParams));
 

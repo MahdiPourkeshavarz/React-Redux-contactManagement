@@ -48,6 +48,7 @@ export const {
   useCreateContactMutation,
   useDeleteContactMutation,
   useUpdateContactMutation,
+  useFetchContactQuery,
 } = contactApi;
 
 export default contactApi;

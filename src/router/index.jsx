@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { NotFoundPage } from "../pages/NotFound/NotFound";
 import { HomePage } from "../pages/Home/HomePage";
 import { CreateContactPage } from "../pages/createContact/CreateContactPage";
-import { EditPage, loader as contactLoader } from "../pages/edit/EditPage";
+import { EditPage } from "../pages/edit/EditPage";
 import { ContactPage } from "../pages/Contact/ContactPage";
 import Layout from "../layout";
 
@@ -23,7 +23,6 @@ const router = createBrowserRouter([
       {
         path: "/contacts/edit/:contactId",
         element: <EditPage />,
-        loader: contactLoader,
       },
       {
         path: "/contacts/:contactId",

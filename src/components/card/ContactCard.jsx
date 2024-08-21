@@ -21,7 +21,7 @@ export function ContactCard({ contact, onDelete }) {
       <div className="flex space-x-4 bg-slate-500 w-[600px] mx-auto items-center px-4 py-2 rounded-md justify-center">
         <div className="actions flex flex-col space-y-1 cursor-pointer">
           <NavLink
-            to={`/contact/${contact.id}`}
+            to={`/contacts/${contact.id}`}
             className="bg-yellow-600 px-1 rounded-lg"
           >
             <img src="/eye.png" alt="_" />
