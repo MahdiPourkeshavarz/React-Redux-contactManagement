@@ -1,4 +1,4 @@
-import { ContactForm } from "../../components/form/ContactForm";
+import { NewContactForm } from "../../components/form/NewContactForm";
 
 export function CreateContactPage() {
   return (
@@ -11,7 +11,7 @@ export function CreateContactPage() {
           <img className="rounded-xl" src="/hero.jpg" alt="_" />
         </div>
         <div>
-          <ContactForm contact={{}} />
+          <NewContactForm />
         </div>
       </div>
     </>

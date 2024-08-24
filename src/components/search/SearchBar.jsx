@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useDebouncedCallback } from "use-debounce";
-import { useFetchContactsQuery } from "../../store/contactSlice";
 import { useSearchParams } from "react-router-dom";
-import { generateQueryParams } from "../../services/queryGenerator";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../../store/searchSlice";
 
 export function SearchBar() {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const debounced = useDebouncedCallback((value) => {
@@ -14,11 +15,10 @@ export function SearchBar() {
       } else {
         prev.delete("fullName_like");
       }
+      dispatch(setSearchQuery(value));
       return prev;
     });
   }, 200);
-
-  useFetchContactsQuery(generateQueryParams(searchParams));
 
   return (
     <>

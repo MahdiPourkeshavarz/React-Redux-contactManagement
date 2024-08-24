@@ -10,8 +10,8 @@ const contactApi = createApi({
   refetchOnReconnect: true,
   endpoints: (builder) => ({
     fetchContacts: builder.query({
-      query: (searchParams) =>
-        `${CONTACTS_URL}${searchParams ? searchParams : ""}`,
+      query: (searchKey) =>
+        `${CONTACTS_URL}?fullName_like=${searchKey ? searchKey : ""}`,
       providesTags: ["contacts"],
     }),
     fetchContact: builder.query({

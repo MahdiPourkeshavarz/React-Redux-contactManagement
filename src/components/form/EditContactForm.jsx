@@ -2,59 +2,44 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import {
-  useCreateContactMutation,
-  useUpdateContactMutation,
-} from "../../store/contactSlice";
+import { useUpdateContactMutation } from "../../store/contactSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const initialProp = {
-  fullName: "",
-  imgUrl: "",
-  mobileNumber: "",
-  emailAddress: "",
-  job: "",
-  relation: "",
-};
-
-export function ContactForm({ contactforUpdate = initialProp }) {
-  const [createContact] = useCreateContactMutation();
+export function EditContactForm({ contactForUpdate }) {
   const [updateContact] = useUpdateContactMutation();
 
-  const [contact, setContact] = useState(contactforUpdate && contactforUpdate);
+  const [contact, setContact] = useState(contactForUpdate || {});
 
   const navigate = useNavigate();
 
   const schema = Yup.object().shape({
     fullName: Yup.string().required("Full name is required"),
     imgUrl: Yup.string().url("Invalid URL").required("Image URL is required"),
-    mobile: Yup.string()
+    mobileNumber: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .min(11, "Must be exactly 10 digits")
-      .max(11, "Must be exactly 10 digits")
+      .min(11, "Must be exactly 11 digits")
+      .max(11, "Must be exactly 11 digits")
       .required("Mobile number is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    emailAddress: Yup.string()
+      .email("Invalid email")
+      .required("Email is required"),
     job: Yup.string().required("Job is required"),
     relation: Yup.string().required("Relation is required"),
   });
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
     reset,
+    handleSubmit,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: contactForUpdate,
   });
 
   const onSubmit = (data) => {
-    console.log(data, contact);
-    if (!contact) {
-      createContact({ ...data, id: crypto.randomUUID() });
-    } else {
-      updateContact(contact);
-    }
+    updateContact(data);
     reset();
     navigate("/");
   };
@@ -70,7 +55,7 @@ export function ContactForm({ contactforUpdate = initialProp }) {
             {...register("fullName")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
             placeholder="نام و نام خوانوادگی"
-            value={contact.fullName}
+            value={contact.fullName || ""}
             onChange={(e) =>
               setContact({ ...contact, fullName: e.target.value })
             }
@@ -83,7 +68,7 @@ export function ContactForm({ contactforUpdate = initialProp }) {
             {...register("imgUrl")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
             placeholder="آدرس تصویر"
-            value={contact.imgUrl}
+            value={contact.imgUrl || ""}
             onChange={(e) => setContact({ ...contact, imgUrl: e.target.value })}
           />
           <p className="text-red-500 text-sm">{errors.imgUrl?.message}</p>
@@ -91,22 +76,23 @@ export function ContactForm({ contactforUpdate = initialProp }) {
 
         <div className="mb-4">
           <input
-            {...register("mobileNumer")}
+            {...register("mobileNumber")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
             placeholder="شماره تلفن"
-            value={contact.mobileNumber}
+            value={contact.mobileNumber || ""}
             onChange={(e) =>
               setContact({ ...contact, mobileNumber: e.target.value })
             }
           />
           <p className="text-red-500 text-sm">{errors.mobileNumber?.message}</p>
         </div>
+
         <div className="mb-4">
           <input
             {...register("emailAddress")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
             placeholder="آدرس ایمیل"
-            value={contact.emailAddress}
+            value={contact.emailAddress || ""}
             onChange={(e) =>
               setContact({ ...contact, emailAddress: e.target.value })
             }
@@ -119,7 +105,7 @@ export function ContactForm({ contactforUpdate = initialProp }) {
             {...register("job")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
             placeholder="شغل"
-            value={contact.job}
+            value={contact.job || ""}
             onChange={(e) => setContact({ ...contact, job: e.target.value })}
           />
           <p className="text-red-500 text-sm">{errors.job?.message}</p>
@@ -129,13 +115,12 @@ export function ContactForm({ contactforUpdate = initialProp }) {
           <select
             {...register("relation")}
             className="w-full p-2 bg-gray-700 text-white rounded text-right"
+            value={contact.relation || ""}
             onChange={(e) =>
               setContact({ ...contact, relation: e.target.value })
             }
           >
-            <option value={contact ? contact.relation : ""}>
-              {contact ? contact.relation : "...رابطه"}
-            </option>
+            <option value="">...رابطه</option>
             <option value="خانواده">خانواده</option>
             <option value="دوست">دوست</option>
             <option value="همکار">همکار</option>
@@ -154,9 +139,8 @@ export function ContactForm({ contactforUpdate = initialProp }) {
           <button
             type="submit"
             className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-            onClick={onSubmit}
           >
-            {contact ? "ویرایش مخاطب" : "ایجاد مخاطب"}
+            ویرایش مخاطب
           </button>
         </div>
       </form>

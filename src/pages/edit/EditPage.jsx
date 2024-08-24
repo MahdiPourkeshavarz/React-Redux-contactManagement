@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { ContactForm } from "../../components/form/ContactForm";
+
 import { useFetchContactQuery } from "../../store/contactSlice";
+import { EditContactForm } from "../../components/form/EditContactForm";
 
 export function EditPage() {
   const { contactId } = useParams();
@@ -16,10 +17,12 @@ export function EditPage() {
 
   return (
     <>
-      <div className="flex justify-center items-center py-28 space-x-4">
-        <img className="w-96 h-auto" src={contact.imgUrl} alt="_" />
-        <ContactForm key={contact?.id} contactforUpdate={contact} />
-      </div>
+      {contact && (
+        <div className="flex justify-center items-center py-28 space-x-4">
+          <img className="w-96 h-auto" src={contact.imgUrl} alt="Contact" />
+          <EditContactForm key={contact.id} contactForUpdate={contact} />
+        </div>
+      )}
     </>
   );
 }

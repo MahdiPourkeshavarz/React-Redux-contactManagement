@@ -5,9 +5,16 @@ import {
 } from "../../store/contactSlice";
 
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export function ContactList() {
-  const { data: contacts, isLoading, isError, error } = useFetchContactsQuery();
+  const query = useSelector((state) => state.search.query);
+  const {
+    data: contacts,
+    isLoading,
+    isError,
+    error,
+  } = useFetchContactsQuery(query);
   const [deleteContact] = useDeleteContactMutation();
 
   function handleDeleteContact(contact) {
